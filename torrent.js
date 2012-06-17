@@ -1,5 +1,8 @@
 var kadoh = require('kadoh');
+var url = require('url');
 var BittorrentNode = require('./lib/bittorrent-node');
+
+var shaReg = /[A-Za-z0-9]{40}/
 
 process.env.KADOH_TRANSPORT = 'udp';
 var torrent = new BittorrentNode(null, {
@@ -13,10 +16,29 @@ var torrent = new BittorrentNode(null, {
   }
 });
 
+function parseMagnetLink(uri) {
+  if (shaReg.test(uri)) {
+    return uri;
+  }
+  var magnet = url.parse(uri, true).query.xt.split(':');
+  if (magnet[0] == "urn" &&
+      magnet[1] == "btih" &&
+      shaReg.test(magnet[2]))
+    return magnet[2];
+  else
+    throw new Error("Wrong Magnet URI");
+}
+
 console.log("Connecting...");
 torrent.connect(function() {
   console.log("Joining...");
   torrent.join(function() {
-    require('repl').start('> ').context.torrent = torrent;
+    console.log('Try torrent.get("#info_hash")');
+    require('repl').start('torrent> ').context.torrent = {
+      node: torrent,
+      get: function(hash) {
+        torrent.get(parseMagnetLink(hash), function(arr) { console.log(arr); })
+      }
+    }
   });
 });
