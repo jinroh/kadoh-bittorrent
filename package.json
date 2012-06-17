@@ -1,0 +1,14 @@
+{
+  "author": "jinroh",
+  "name": "kadoh-bittorrent",
+  "description": "Example application for KadOH that looks like Bittorrent..uh?",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jinroh/kadoh-bittorrent",
+  "engines": {
+    "node": "~0.6"
+  },
+  "dependencies": {
+    "kadoh" : "https://github.com/jinroh/kadoh/tarball/master"
+  },
+  "devDependencies": {}
+}
