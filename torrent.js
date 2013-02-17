@@ -4,6 +4,8 @@ var kadoh = require('kadoh');
     url = require('url');
     bittorrent = require('./lib/bittorrent-node');
 
+var log = kadoh.logger.logging;
+
 var shaReg = /[A-Za-z0-9]{40}/
 
 var node = new bittorrent(null, {
@@ -16,6 +18,8 @@ var node = new bittorrent(null, {
     }
   }
 });
+
+new kadoh.logger.reporter.Console(log, 'debug');
 
 function parseMagnetLink(uri) {
   if (shaReg.test(uri)) {
