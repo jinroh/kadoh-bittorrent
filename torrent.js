@@ -8,7 +8,7 @@ var log = kadoh.logger.logging;
 
 var shaReg = /[A-Za-z0-9]{40}/
 
-var node = new bittorrent('099f9586173ba91c05c2781311ddfc22122ae75a', {
+var node = new bittorrent(null, {
   bootstraps: ['67.215.242.139:6881', '67.215.242.138:6881'],
   reactor : {
     type: 'udp',
