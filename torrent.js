@@ -34,19 +34,14 @@ function parseMagnetLink(uri) {
     throw new Error("Wrong Magnet URI");
 }
 
-console.log("Connecting...");
 node.connect(function() {
-  console.log("Joining...");
   node.join(function() {
-    console.log('Try torrent.get("#info_hash")');
     require('repl').start('torrent> ').context.torrent = {
       node: node,
       get: function(hash) {
         node.get(parseMagnetLink(hash), function(arr) { console.log(arr); })
       },
-      announce: function() {
-        
-      }
+      announce: function() {}
     }
   });
 });
